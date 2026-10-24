@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# Block spam / low-quality crawlers (patterned after xingfeichemical.com)
+User-agent: YoudaoBot
+Disallow: /
+User-agent: JikeSpider
+Disallow: /
+User-agent: EasouSpider
+Disallow: /
+User-agent: MJ12bot
+Disallow: /
+User-agent: YYSpider
+Disallow: /
+User-agent: rogerbot
+Disallow: /
+User-agent: Bytespider
+Disallow: /wp-admin/
+User-agent: SemrushBot
+Disallow: /
+
+# Sitemap
+Sitemap: http://localhost:8080/sitemap_index.xml

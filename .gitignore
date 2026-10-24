@@ -1,0 +1,15 @@
+# ===== 敏感配置：本地真实 wp-config.php 永不入库 =====
+wordpress/wp-config.php
+
+# ===== 下载的安装包 =====
+*.zip
+
+# ===== macOS =====
+.DS_Store
+
+# ===== 运行时数据（媒体上传、日志） =====
+wordpress/wp-content/uploads/
+*.log
+
+# ===== 本地环境脚本中的本地变量 =====
+.env
