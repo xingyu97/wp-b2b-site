@@ -3,7 +3,7 @@
 # 构建：podman build -t wp-b2b-site .
 # 运行：podman run -d -p 8080:80 -e WP_DB_PASSWORD=<密码> wp-b2b-site
 # ============================================================
-FROM docker.1ms.run/library/alpine:latest
+FROM alpine:3.20
 
 # 切腾讯云 apk 源（国内网络可达）+ 安装 Apache/PHP8.3/MariaDB
 RUN sed -i 's#dl-cdn.alpinelinux.org#mirrors.cloud.tencent.com#g' /etc/apk/repositories \
