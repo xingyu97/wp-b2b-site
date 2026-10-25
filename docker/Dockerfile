@@ -5,8 +5,12 @@
 # ============================================================
 FROM alpine:3.20
 
-# 切腾讯云 apk 源（国内网络可达）+ 安装 Apache/PHP8.3/MariaDB
-RUN sed -i 's#dl-cdn.alpinelinux.org#mirrors.cloud.tencent.com#g' /etc/apk/repositories \
+# apk 源切换（默认官方源，全球可达；本地中国网络构建时传 --build-arg APK_MIRROR=https://mirrors.cloud.tencent.com）
+ARG APK_MIRROR=""
+# 安装 Apache/PHP8.3/MariaDB
+RUN if [ -n "$APK_MIRROR" ]; then \
+        sed -i "s#dl-cdn.alpinelinux.org#$APK_MIRROR#g" /etc/apk/repositories; \
+    fi \
     && apk add --no-cache \
     apache2 \
     apache2-ssl \
