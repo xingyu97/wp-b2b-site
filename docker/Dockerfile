@@ -1,7 +1,7 @@
 # ============================================================
 # 外贸 B2B 网站（WordPress + Apache + PHP8.3 + MariaDB）镜像
-# 构建：podman build -t wp-b2b-site .
-# 运行：podman run -d -p 8080:80 -e WP_DB_PASSWORD=<密码> wp-b2b-site
+# 构建：docker build -t wp-b2b-site .
+# 运行：docker run -d -p 8080:80 -e WP_DB_PASSWORD=<密码> wp-b2b-site
 # ============================================================
 FROM alpine:3.20
 
