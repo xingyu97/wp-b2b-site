@@ -42,6 +42,36 @@
 #    后台 http://localhost:8080/wp-login.php
 ```
 
+## 直接使用已发布镜像（推荐，无需构建）
+
+镜像已发布到 GitHub 容器仓库（ghcr.io），公开可拉取，**不需要本机有任何构建环境**，只要装了 Docker 即可。
+
+```sh
+# 1. 拉取镜像（公开镜像，无需登录）
+docker pull ghcr.io/xingyu97/wp-b2b-site:latest
+
+# 2. 启动网站
+docker run -d -p 8080:80 \
+  -e WP_DB_PASSWORD=自己设的数据库密码 \
+  --name wp-b2b \
+  -v wpdb:/var/lib/mysql \
+  ghcr.io/xingyu97/wp-b2b-site:latest
+
+# 3. 浏览器访问（容器启动会自动建库、生成配置，约 30 秒就绪）
+#    http://localhost:8080   → 前台，走 WordPress 安装向导
+#    http://localhost:8080/wp-login.php → 后台管理
+```
+
+说明：
+- **无需构建**：镜像已在云端构建好，`pull` + `run` 两条命令即可
+- **端口冲突**：如果 8080 被占用，改启动命令里的 `-p 8090:80`，访问端口随之改
+- **数据持久化**：`-v wpdb:/var/lib/mysql` 把数据库存到 Docker 命名卷，容器删除/重建数据不丢
+- **停止/重启**：`docker stop wp-b2b` / `docker start wp-b2b`
+- **完全卸载**：`docker rm -f wp-b2b && docker volume rm wpdb`
+- **拉取慢**：国内网络拉 ghcr.io 可能较慢，属正常现象，耐心等待即可
+
+> 本方式适合最终使用者。如需自己从源码构建镜像，见下一节。
+
 ## 构建并运行镜像
 
 ```sh
