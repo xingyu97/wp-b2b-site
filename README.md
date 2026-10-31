@@ -31,7 +31,7 @@
 └── wp-start.sh                 # 本地容器一键恢复脚本
 ```
 
-## 本地开发（mac + podman）
+## 本地开发（mac + docker）
 
 ```sh
 # 1. 启动容器并初始化（详见 wp-start.sh / wp-setup.sh）
@@ -45,8 +45,8 @@
 ## 构建并运行镜像
 
 ```sh
-podman build -t wp-b2b-site .
-podman run -d -p 8080:80 \
+docker build -t wp-b2b-site .
+docker run -d -p 8080:80 \
   -e WP_DB_PASSWORD=你的数据库密码 \
   --name wp-b2b wp-b2b-site
 ```
