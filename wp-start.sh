@@ -16,8 +16,10 @@ sleep 2
 echo "== 2/3 启动容器内 MariaDB =="
 podman exec wp-b2b sh -c '
     mkdir -p /run/mysqld && chown mysql:mysql /run/mysqld
+    # 确保监听 TCP 3306（alpine 默认 skip-networking，会导致 WP 连 127.0.0.1 失败 → 全站 500）
+    sed -i "s/^skip-networking/#skip-networking/" /etc/my.cnf.d/mariadb-server.cnf 2>/dev/null
     if ! mysqladmin ping >/dev/null 2>&1; then
-        /usr/bin/mariadbd --user=mysql --datadir=/var/lib/mysql >/var/log/mariadbd.log 2>&1 &
+        /usr/bin/mariadbd --user=mysql --datadir=/var/lib/mysql --skip-networking=0 --port=3306 >/var/log/mariadbd.log 2>&1 &
         for i in $(seq 1 30); do sleep 1; mysqladmin ping >/dev/null 2>&1 && break; done
     fi
     mysqladmin ping >/dev/null 2>&1 && echo "  MariaDB OK" || { echo "  MariaDB 启动失败"; tail -5 /var/log/mariadbd.log; exit 1; }
